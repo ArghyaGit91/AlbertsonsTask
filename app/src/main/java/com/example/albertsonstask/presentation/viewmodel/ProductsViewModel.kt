@@ -1,6 +1,9 @@
 package com.example.albertsonstask.presentation.viewmodel
 
 import android.app.Application
+import android.text.Editable
+import android.text.TextUtils
+import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +14,7 @@ import com.example.albertsonstask.data.model.SearchProductResponseModel
 import com.example.albertsonstask.data.utils.Resource
 import com.example.albertsonstask.domain.usecase.GetSearchedProductList
 import com.example.albertsonstask.presentation.utils.Utils
+import com.example.albertsonstask.presentation.utils.validateSearch
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +31,18 @@ class ProductsViewModel @Inject constructor(
 
     val productLiveData: MutableLiveData<Resource<ProductsItem>> =
         MutableLiveData()
+
+
+
+        fun onSearch(text: CharSequence?) {
+            if (text.toString().validateSearch()) {
+                callSearchProduct(text.toString())
+            }
+        }
+
+
+
+
 
     fun callSearchProduct(searchQuery: String) = viewModelScope.launch(Dispatchers.IO) {
         try {
