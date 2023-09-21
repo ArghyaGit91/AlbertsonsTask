@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="product"
             type="com.example.albertsonstask.data.model.ProductsItem" />
+
+        <variable
+            name="saved"
+            type="boolean" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dp16"
+        android:layout_marginBottom="@dimen/dp16"
+        app:cardCornerRadius="@dimen/dp8">
 
-        <TextView
-            android:id="@+id/tvProduct"
-            android:layout_width="0dp"
+        <include
+            android:id="@+id/itemBody"
+            layout="@layout/item_product_body"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{product.title}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            bind:product="@{product}"
+            bind:saved="@{saved}" />
+    </androidx.cardview.widget.CardView>
 </layout>

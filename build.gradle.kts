@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         google()
+        mavenCentral()
     }
     dependencies {
         val navVersion = "2.6.0"

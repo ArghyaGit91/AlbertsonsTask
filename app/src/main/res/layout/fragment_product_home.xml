@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-            name = "productSearchViewModel"
-            type="com.example.albertsonstask.presentation.viewmodel.ProductsViewModel"/>
-
-
+            name="productSearchViewModel"
+            type="com.example.albertsonstask.presentation.viewmodel.ProductsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,15 +15,31 @@
         android:layout_height="match_parent"
         tools:context=".presentation.fragments.ProductHomeFragment">
 
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dp16"
+            android:text="@string/product_search"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/ivFavourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:contentDescription="@string/favourites"
             android:padding="@dimen/dp16"
+            android:onClick="@{() -> productSearchViewModel.displaySavedList()}"
             android:src="@drawable/favourite_dark"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tvTitle" />
 
         <EditText
             android:id="@+id/etSearch"
@@ -37,17 +52,18 @@
             android:onTextChanged="@{(text, start, before, count) -> productSearchViewModel.onSearch(text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivFavourite" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProductList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp16"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etSearch"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="@dimen/dp10" />
+            tools:layout="@layout/item_product" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

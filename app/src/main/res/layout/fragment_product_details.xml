@@ -19,15 +19,18 @@
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Product Details"
+            android:layout_height="?actionBarSize"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dp16"
+            android:text="@string/product_details"
+            android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <include
-            layout="@layout/item_product"
+            layout="@layout/item_product_body"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

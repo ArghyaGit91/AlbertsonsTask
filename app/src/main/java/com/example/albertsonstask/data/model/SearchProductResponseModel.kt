@@ -1,5 +1,7 @@
 package com.example.albertsonstask.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 data class SearchProductResponseModel(
@@ -17,6 +19,7 @@ data class SearchProductResponseModel(
     val products: List<ProductsItem>
 )
 
+@Entity(tableName = "product")
 data class ProductsItem(
 
     @field:SerializedName("discountPercentage")
@@ -37,6 +40,7 @@ data class ProductsItem(
     @field:SerializedName("description")
     val description: String,
 
+    @PrimaryKey
     @field:SerializedName("id")
     val id: Int,
 
