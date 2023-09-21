@@ -54,5 +54,10 @@ data class ProductsItem(
     val category: String,
 
     @field:SerializedName("brand")
-    val brand: String
+    val brand: String,
+
+    @field:SerializedName("favourites")
+    var myFavourite: Boolean = false
+
+
 )

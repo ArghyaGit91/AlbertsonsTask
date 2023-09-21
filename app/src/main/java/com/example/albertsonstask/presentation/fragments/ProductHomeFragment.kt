@@ -48,6 +48,7 @@ class ProductHomeFragment : Fragment() {
             }
         }
 
+
         viewLifecycleOwner.lifecycleScope.launch {
             productsViewModel._productsSavedState.collect {
                 when (it) {

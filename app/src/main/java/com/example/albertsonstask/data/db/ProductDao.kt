@@ -22,4 +22,8 @@ interface ProductDao {
 
     @Delete
     fun remove(product: ProductsItem): Int
+
+
+//    @Query("UPDATE product SET favourites=:myFavourite WHERE id = :id")
+//    fun updateItem(myFavourite: Boolean, id: Int): Int
 }

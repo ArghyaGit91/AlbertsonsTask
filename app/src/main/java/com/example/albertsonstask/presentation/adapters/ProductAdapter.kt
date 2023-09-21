@@ -41,6 +41,9 @@ class ProductAdapter(
         }
         holder.binding.itemBody.ivSave.setOnClickListener {
             onSaveClick?.invoke(products[position], products[position] !in savedProducts)
+            products[position].myFavourite = !products[position].myFavourite
+
+            notifyItemChanged(position)
         }
     }
 

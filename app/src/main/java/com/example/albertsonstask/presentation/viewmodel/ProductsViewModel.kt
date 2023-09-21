@@ -2,6 +2,7 @@ package com.example.albertsonstask.presentation.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -34,6 +35,8 @@ class ProductsViewModel @Inject constructor(
     val productLiveData: MutableLiveData<Resource<ProductsItem>> =
         MutableLiveData()
 
+    val productsLoading = ObservableField(false)
+
     fun onSearch(charaSequence: CharSequence?) {
         val text = charaSequence.toString()
         if (text.validateSearch()) {
@@ -51,6 +54,7 @@ class ProductsViewModel @Inject constructor(
 
     fun callSearchProduct(searchQuery: String) = viewModelScope.launch(Dispatchers.IO) {
         try {
+            productsLoading.set(true)
             productsLiveData.postValue(Resource.Loading())
             if (Utils.isOnline(application)) {
                 val searchedResultResponse = getSearchedProductList.execute(searchQuery)
@@ -58,6 +62,7 @@ class ProductsViewModel @Inject constructor(
                 searchedResultResponse.let {
                     Log.v("product - apiResponse: ", searchedResultResponse.data.toString())
                     productsLiveData.postValue(searchedResultResponse)
+                    productsLoading.set(false)
                 }
 
             } else {
