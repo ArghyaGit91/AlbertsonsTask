@@ -96,33 +96,34 @@ class ProductsViewModel @Inject constructor(
         }
     }
 
-    private val productsSavedState: MutableStateFlow<Resource<List<ProductsItem>>> =
+    private val _productsSavedState: MutableStateFlow<Resource<List<ProductsItem>>> =
         MutableStateFlow(Resource.Success(listOf()))
 
-    val _productsSavedState: StateFlow<Resource<List<ProductsItem>>> = productsSavedState
+    val productsSavedState: StateFlow<Resource<List<ProductsItem>>> = _productsSavedState
 
     fun getSavedProducts(search: String? = null) = viewModelScope.launch {
         getSearchedProductList.getSavedProducts(search)
             .catch { e ->
-                productsSavedState.value = Resource.Error(e.message)
+                _productsSavedState.value = Resource.Error(e.message)
             }.stateIn(
                 viewModelScope,
                 SharingStarted.Eagerly,
-                listOf()
+                null
             ).collect {
-                val response = it
-                productsSavedState.value = Resource.Success(response)
+                it?.let { list ->
+                    _productsSavedState.value = Resource.Success(list)
+                }
             }
     }
 
-    private val savedState: MutableStateFlow<Resource<String>> =
+    private val _savedState: MutableStateFlow<Resource<String>> =
         MutableStateFlow(Resource.Success(""))
-    val _savedState = savedState
+    val savedState = _savedState
 
     fun save(product: ProductsItem) = viewModelScope.launch {
         getSearchedProductList.save(product)
             .catch { e ->
-                savedState.value = Resource.Error(e.message)
+                _savedState.value = Resource.Error(e.message)
                 Log.d("errorResponse", e.message.toString())
             }.stateIn(
                 viewModelScope,
@@ -131,7 +132,7 @@ class ProductsViewModel @Inject constructor(
             ).collect {
                 val response = it
                 if (response > 0) {
-                    savedState.value = Resource.Success("saved")
+                    _savedState.value = Resource.Success("saved")
                     Log.d("queryResponse", response.toString())
                 }
             }
@@ -140,7 +141,7 @@ class ProductsViewModel @Inject constructor(
     fun remove(product: ProductsItem) = viewModelScope.launch {
         getSearchedProductList.remove(product)
             .catch { e ->
-                savedState.value = Resource.Error(e.message)
+                _savedState.value = Resource.Error(e.message)
                 Log.d("errorResponse", e.message.toString())
             }.stateIn(
                 viewModelScope,
@@ -149,7 +150,7 @@ class ProductsViewModel @Inject constructor(
             ).collect {
                 val response = it
                 if (response > 0) {
-                    savedState.value = Resource.Success("removed")
+                    _savedState.value = Resource.Success("removed")
                     Log.d("queryResponse", response.toString())
                 }
             }

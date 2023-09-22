@@ -50,7 +50,7 @@ class ProductHomeFragment : Fragment() {
 
 
         viewLifecycleOwner.lifecycleScope.launch {
-            productsViewModel._productsSavedState.collect {
+            productsViewModel.productsSavedState.collect {
                 when (it) {
                     is Resource.Success -> {
                         it.data?.let { savedList ->
@@ -58,6 +58,7 @@ class ProductHomeFragment : Fragment() {
                             productAdapter?.savedProducts = savedList
                             if (productsViewModel.displaySavedList) {
                                 productAdapter?.products = savedList
+                                productsViewModel.displaySavedList = false
                             }
                             productAdapter?.notifyDataSetChanged()
                         }
@@ -73,7 +74,7 @@ class ProductHomeFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            productsViewModel._savedState.collect {
+            productsViewModel.savedState.collect {
                 when (it) {
                     is Resource.Success -> {
                         it.data?.let { saved ->

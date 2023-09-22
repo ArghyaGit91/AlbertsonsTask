@@ -82,6 +82,8 @@ dependencies {
     //room db
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
+//    implementation ("android.arch.persistence.room:runtime:$roomVersion")
+//    annotationProcessor ("android.arch.persistence.room:compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
 
@@ -91,6 +93,18 @@ dependencies {
 
     testImplementation("com.squareup.okhttp3:mockwebserver:4.11.0")
     testImplementation("com.google.truth:truth:1.1.4")
+
+    testImplementation ("org.mockito:mockito-core:2.24.5")
+    // required if you want to use Mockito for Android tests
+    androidTestImplementation ("org.mockito:mockito-android:2.24.5")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+    androidTestImplementation ("android.arch.persistence.room:testing:1.0.0")
+
+    testImplementation ("android.arch.core:core-testing:1.0.0")
+
+    testImplementation ("io.mockk:mockk:1.12.0")
+    androidTestImplementation ("io.mockk:mockk-android:1.12.0")
 
 
 }

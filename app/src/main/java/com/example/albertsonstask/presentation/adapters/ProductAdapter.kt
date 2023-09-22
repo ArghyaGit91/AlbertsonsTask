@@ -40,10 +40,14 @@ class ProductAdapter(
             onItemClick?.invoke(products[position].id)
         }
         holder.binding.itemBody.ivSave.setOnClickListener {
-            onSaveClick?.invoke(products[position], products[position] !in savedProducts)
-            products[position].myFavourite = !products[position].myFavourite
+            try {
+                onSaveClick?.invoke(products[position], products[position] !in savedProducts)
+                products[position].myFavourite = !products[position].myFavourite
 
-            notifyItemChanged(position)
+                notifyItemChanged(position)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
