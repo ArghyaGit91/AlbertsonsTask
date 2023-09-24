@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -98,12 +99,13 @@ class ProductHomeFragment : Fragment() {
             products = listOf(), onItemClick = { id: Int ->
                 val bundle = Bundle()
                 bundle.putInt("productId", id)
+                bundle.putString("name", "Arghya")
+//                bundleOf(
+//                    "productId" to id,
+//                    "name" to "Arghya"
+//                )
                 findNavController().navigate(R.id.productDetailsFragment, bundle)
 
-                /*findNavController().navigate(
-                    ProductHomeFragmentDirections
-                        .actionProductHomeFragmentToProductDetailsFragment(id)
-                )*/
             }, onSaveClick = { product: ProductsItem, save: Boolean ->
                 if (save) {
                     productsViewModel.save(product)

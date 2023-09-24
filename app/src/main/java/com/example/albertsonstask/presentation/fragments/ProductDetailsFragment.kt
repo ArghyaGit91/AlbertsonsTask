@@ -30,7 +30,9 @@ class ProductDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val productId = args.productId
-        Log.d("product - 3 details", productId.toString())
+        val name = args.name
+//        val name: String = requireArguments().getString("name")!!
+        Log.d("product - 3 details", productId.toString()+" name: "+name)
 
         productsViewModel.callProduct(productId)
 

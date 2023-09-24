@@ -7,7 +7,10 @@ import com.example.albertsonstask.data.model.ProductsItem
 import com.example.albertsonstask.data.model.SearchProductResponseModel
 import com.example.albertsonstask.data.model.searchResult
 import com.example.albertsonstask.data.repository.ProductRepositoryImpl
+import com.example.albertsonstask.data.repository.datasource.ProductLocalDataSource
 import com.example.albertsonstask.data.repository.datasource.ProductRemoteDataSource
+import com.example.albertsonstask.data.repository.datasourceimpl.ProductLocalDataSourceImpl
+import com.example.albertsonstask.data.repository.datasourceimpl.ProductRemoteDataSourceImpl
 import com.example.albertsonstask.data.utils.MainCoroutineRule
 import com.example.albertsonstask.data.utils.Resource
 import com.example.albertsonstask.domain.repository.ProductRepository
@@ -15,11 +18,13 @@ import com.example.albertsonstask.domain.usecase.GetSearchedProductList
 import com.example.albertsonstask.presentation.utils.Utils
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.spyk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -51,14 +56,10 @@ internal class ProductsViewModelTest {
     @get:Rule
     val mainCoroutineRule = MainCoroutineRule()
 
-    @MockK
-    lateinit var productRepositoryImpl: ProductRepositoryImpl
-
-    @MockK
-    lateinit var productRemoteDataSource: ProductRemoteDataSource
-
 
     private lateinit var productsViewModel: ProductsViewModel
+
+
 
 
     @MockK
@@ -67,12 +68,25 @@ internal class ProductsViewModelTest {
     @MockK
     private lateinit var getSearchedProductList: GetSearchedProductList
 
+    @MockK
+    private lateinit var productRepository: ProductRepositoryImpl
+
+    @MockK
+    private lateinit var productRemoteDataSource: ProductRemoteDataSourceImpl
+
+    @MockK
+    private lateinit var productLocalDataSource: ProductLocalDataSourceImpl
+
+
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
 
+        productRepository = spyk(ProductRepositoryImpl(productRemoteDataSource,productLocalDataSource))
+        getSearchedProductList = spyk(GetSearchedProductList(productRepository))
         productsViewModel = spyk(ProductsViewModel(application,getSearchedProductList))
+
 
     }
 
@@ -81,7 +95,24 @@ internal class ProductsViewModelTest {
     @Test
     fun when_callSearchProduct_called_and_then_return_success_response() = runTest {
 
-        coEvery{(productsViewModel.callSearchProduct("laptop"))}
+        val responseSuccess = SearchProductResponseModel(
+            0,0,0, listOf(
+                ProductsItem(0.0,"", listOf(),0,0.0,"",0,"",
+                    0,"laptops","",false)
+            )
+        )
+        coEvery{
+//            (productsViewModel.callSearchProduct("laptop"))
+
+            productRepository.getSearchProduct("laptop")
+        }returns Resource.Success(responseSuccess)
+//        productsViewModel.callSearchProduct("laptop")
+        coVerify {
+//            productsViewModel.productsLiveData.value
+            productRepository.getSearchProduct("laptop")
+        }
+
+        assertEquals(Resource.Success(responseSuccess),productsViewModel.productsLiveData.value)
 
     }
 
