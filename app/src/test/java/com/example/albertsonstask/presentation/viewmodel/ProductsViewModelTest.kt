@@ -4,6 +4,7 @@ import android.app.Application
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.example.albertsonstask.data.api.APIInterface
+import com.example.albertsonstask.data.db.ProductDao
 import com.example.albertsonstask.data.model.ProductsItem
 import com.example.albertsonstask.data.model.SearchProductResponseModel
 import com.example.albertsonstask.data.model.searchResult
@@ -81,15 +82,20 @@ internal class ProductsViewModelTest {
     @MockK
     private lateinit var apiInterface: APIInterface
 
+    @MockK
+    private lateinit var productDao: ProductDao
+
 
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
 
-        productRepository = spyk(ProductRepositoryImpl(productRemoteDataSource,productLocalDataSource))
-        getSearchedProductList = spyk(GetSearchedProductList(productRepository))
         productsViewModel = spyk(ProductsViewModel(application,getSearchedProductList))
+        getSearchedProductList = spyk(GetSearchedProductList(productRepository))
+        productRepository = spyk(ProductRepositoryImpl(productRemoteDataSource,productLocalDataSource))
+        productLocalDataSource = spyk(ProductLocalDataSourceImpl(productDao))
+        productRemoteDataSource = spyk(ProductRemoteDataSourceImpl(apiInterface))
 
 
     }
