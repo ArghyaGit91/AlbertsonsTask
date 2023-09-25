@@ -36,6 +36,8 @@ class ProductsViewModel @Inject constructor(
         MutableLiveData()
 
     val productsLoading = ObservableField(false)
+    val recyclerViewLoad = ObservableField(false)
+    val noDataFound = ObservableField(false)
 
     fun onSearch(charaSequence: CharSequence?) {
         val text = charaSequence.toString()
@@ -61,8 +63,16 @@ class ProductsViewModel @Inject constructor(
                     val searchedResultResponse = getSearchedProductList.execute(searchQuery)
 
                     searchedResultResponse.let {
-                        Log.v("product - apiResponse: ", searchedResultResponse.data.toString())
-                        productsLiveData.postValue(searchedResultResponse)
+                        if (searchedResultResponse.data?.products?.isNotEmpty() == true) {
+                            recyclerViewLoad.set(true)
+                            noDataFound.set(false)
+                            Log.v("product - apiResponse: ", searchedResultResponse.data.toString())
+                            productsLiveData.postValue(searchedResultResponse)
+
+                        }else{
+                            recyclerViewLoad.set(false)
+                            noDataFound.set(true)
+                        }
                         productsLoading.set(false)
                     }
 
@@ -120,7 +130,11 @@ class ProductsViewModel @Inject constructor(
                 null
             ).collect {
                 it?.let { list ->
-                    _productsSavedState.value = Resource.Success(list)
+                    if (list.isNotEmpty()) {
+                        recyclerViewLoad.set(true)
+                        noDataFound.set(false)
+                        _productsSavedState.value = Resource.Success(list)
+                    }
                 }
             }
     }

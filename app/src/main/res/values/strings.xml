@@ -10,5 +10,6 @@
     <string name="product_search">Product Search</string>
     <string name="thumbnail">Thumbnail</string>
     <string name="save">Save</string>
+    <string name="no_data_found">No data found</string>
 
 </resources>

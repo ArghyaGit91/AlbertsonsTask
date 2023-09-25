@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +16,7 @@ import com.example.albertsonstask.data.model.ProductsItem
 import com.example.albertsonstask.data.utils.Resource
 import com.example.albertsonstask.databinding.FragmentProductHomeBinding
 import com.example.albertsonstask.presentation.adapters.ProductAdapter
+import com.example.albertsonstask.presentation.utils.Utils
 import com.example.albertsonstask.presentation.viewmodel.ProductsViewModel
 import kotlinx.coroutines.launch
 
@@ -44,8 +45,13 @@ class ProductHomeFragment : Fragment() {
         productsViewModel.productsLiveData.observe(viewLifecycleOwner) {
             it.data?.products?.let { products ->
                 Log.d("product - 1 observer", products.toString())
-                productAdapter?.products = products
-                productAdapter?.notifyDataSetChanged()
+                if (products.isNotEmpty()) {
+                    productAdapter?.products = products
+                    productAdapter?.notifyDataSetChanged()
+                }else{
+                    view?.let { Utils.hideSoftKeyBoard(requireContext(),it) }
+                    Toast.makeText(requireContext(),"No data found",Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
