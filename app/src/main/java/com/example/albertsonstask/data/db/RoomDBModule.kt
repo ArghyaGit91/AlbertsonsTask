@@ -9,11 +9,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-/**
- * @Author: Sourav PC
- * @Date: 19-09-2023
- */
-
 @Module
 @InstallIn(SingletonComponent::class)
 class RoomDBModule {

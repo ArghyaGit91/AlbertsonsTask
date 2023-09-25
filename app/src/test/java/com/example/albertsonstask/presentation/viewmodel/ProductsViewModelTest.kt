@@ -3,6 +3,7 @@ package com.example.albertsonstask.presentation.viewmodel
 import android.app.Application
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
+import com.example.albertsonstask.data.api.APIInterface
 import com.example.albertsonstask.data.model.ProductsItem
 import com.example.albertsonstask.data.model.SearchProductResponseModel
 import com.example.albertsonstask.data.model.searchResult
@@ -76,6 +77,9 @@ internal class ProductsViewModelTest {
 
     @MockK
     private lateinit var productLocalDataSource: ProductLocalDataSourceImpl
+
+    @MockK
+    private lateinit var apiInterface: APIInterface
 
 
 

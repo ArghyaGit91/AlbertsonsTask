@@ -5,10 +5,6 @@ import com.example.albertsonstask.data.model.ProductsItem
 import com.example.albertsonstask.data.repository.datasource.ProductLocalDataSource
 import javax.inject.Inject
 
-/**
- * @Author: Sourav PC
- * @Date: 19-09-2023
- */
 class ProductLocalDataSourceImpl @Inject constructor(
     private val productDao: ProductDao
 ) : ProductLocalDataSource {
