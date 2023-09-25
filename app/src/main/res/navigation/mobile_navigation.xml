@@ -23,10 +23,7 @@
             android:name="productId"
             android:defaultValue="0"
             app:argType="integer" />
-        <argument
-            android:name="name"
-            android:defaultValue="0"
-            app:argType="string" />
+
     </fragment>
     <fragment
         android:id="@+id/savedProductFragment"

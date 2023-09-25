@@ -99,11 +99,6 @@ class ProductHomeFragment : Fragment() {
             products = listOf(), onItemClick = { id: Int ->
                 val bundle = Bundle()
                 bundle.putInt("productId", id)
-                bundle.putString("name", "Arghya")
-//                bundleOf(
-//                    "productId" to id,
-//                    "name" to "Arghya"
-//                )
                 findNavController().navigate(R.id.productDetailsFragment, bundle)
 
             }, onSaveClick = { product: ProductsItem, save: Boolean ->
