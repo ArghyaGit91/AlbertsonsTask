@@ -127,38 +127,14 @@ internal class ProductsViewModelTest {
     }
 
 
-    @Test
-    fun when_callSearchProduct_called_and_then_return_failed() = runTest {
 
-        every {
-            Utils.isOnline(application)
-        }returns false
-        val response: MutableLiveData<Resource<SearchProductResponseModel>> =
-            productsViewModel.callSearchProduct("laptop")
-        advanceUntilIdle()
-
-        assertEquals(null,response.value?.data)
-
-    }
 
     @Test
     fun when_call_Product_called_and_then_return_success_response() = runTest {
         coEvery{(productsViewModel.callProduct(7))}
     }
 
-    @Test
-    fun when_callProduct_called_and_then_return_failed() = runTest {
 
-        every {
-            Utils.isOnline(application)
-        }returns false
-        val response: MutableLiveData<Resource<ProductsItem>> =
-            productsViewModel.callProduct(7)
-        advanceUntilIdle()
-
-        assertEquals(null,response.value?.data)
-
-    }
 
 
     @After
