@@ -1,7 +1,8 @@
-package com.example.albertsonstask.data.db
+package com.example.albertsonstask.presentation.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.albertsonstask.data.db.ProductDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
