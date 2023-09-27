@@ -1,6 +1,7 @@
 package com.example.albertsonstask.presentation.di
 
 import com.example.albertsonstask.data.db.ProductDao
+import com.example.albertsonstask.data.db.ProductDatabase
 import com.example.albertsonstask.data.repository.datasource.ProductLocalDataSource
 import com.example.albertsonstask.data.repository.datasourceimpl.ProductLocalDataSourceImpl
 import dagger.Module
@@ -13,11 +14,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class LocalDataModule {
 
+
+
     @Singleton
     @Provides
-    fun provideProductLocalDataSource(
-        productDao: ProductDao
-    ): ProductLocalDataSource {
-        return ProductLocalDataSourceImpl(productDao)
+    fun providesProductDao(appDatabase: ProductDatabase): ProductDao {
+        return appDatabase.productDao()
     }
 }
