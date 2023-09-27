@@ -36,7 +36,7 @@ class ProductDetailsFragment : Fragment() {
         productsViewModel.callProduct(productId)
 
         initObservers()
-        initViews()
+
     }
 
     private fun initObservers() {
@@ -46,7 +46,4 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
-    private fun initViews() {
-
-    }
 }
