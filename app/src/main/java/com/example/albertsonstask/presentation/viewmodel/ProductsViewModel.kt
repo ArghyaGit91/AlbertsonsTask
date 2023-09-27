@@ -60,7 +60,7 @@ class ProductsViewModel @Inject constructor(
                 productsLoading.set(true)
                 productsLiveData.postValue(Resource.Loading())
                 if (Utils.isOnline(application)) {
-                    val searchedResultResponse = getSearchedProductList.searchProductDetails(searchQuery)
+                    val searchedResultResponse = getSearchedProductList.searchProduct(searchQuery)
 
                     searchedResultResponse.let {
                         if (searchedResultResponse.data?.products?.isNotEmpty() == true) {
