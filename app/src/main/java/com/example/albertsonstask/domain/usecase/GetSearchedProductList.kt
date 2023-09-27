@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.flowOn
 class GetSearchedProductList(
     private val productRepository: ProductRepository
 ) {
-    suspend fun execute(searchedQuery: String): Resource<SearchProductResponseModel> {
+    suspend fun searchProductDetails(searchedQuery: String): Resource<SearchProductResponseModel> {
         return productRepository.getSearchProduct(searchedQuery)
     }
 
-    suspend fun execute(id: Int): Resource<ProductsItem> {
+    suspend fun getProductDetails(id: Int): Resource<ProductsItem> {
         return productRepository.getProduct(id)
     }
 

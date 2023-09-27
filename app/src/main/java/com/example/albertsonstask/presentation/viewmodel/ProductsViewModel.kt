@@ -44,6 +44,7 @@ class ProductsViewModel @Inject constructor(
         if (text.validateSearch()) {
             callSearchProduct(text)
             getSavedProducts(text)
+            
         }
     }
 
@@ -59,7 +60,7 @@ class ProductsViewModel @Inject constructor(
                 productsLoading.set(true)
                 productsLiveData.postValue(Resource.Loading())
                 if (Utils.isOnline(application)) {
-                    val searchedResultResponse = getSearchedProductList.execute(searchQuery)
+                    val searchedResultResponse = getSearchedProductList.searchProductDetails(searchQuery)
 
                     searchedResultResponse.let {
                         if (searchedResultResponse.data?.products?.isNotEmpty() == true) {
@@ -92,7 +93,7 @@ class ProductsViewModel @Inject constructor(
             try {
                 productLiveData.postValue(Resource.Loading())
                 if (Utils.isOnline(application)) {
-                    val searchedResultResponse = getSearchedProductList.execute(id)
+                    val searchedResultResponse = getSearchedProductList.getProductDetails(id)
 
                     searchedResultResponse.let {
                         productLiveData.postValue(searchedResultResponse)
@@ -108,32 +109,6 @@ class ProductsViewModel @Inject constructor(
             }
         }
 
-//        return productLiveData
-
-
-//    fun callProduct(id: Int) : MutableLiveData<Resource<ProductsItem>>{
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                productLiveData.postValue(Resource.Loading())
-//                if (Utils.isOnline(application)) {
-//                    val searchedResultResponse = getSearchedProductList.execute(id)
-//
-//                    searchedResultResponse.let {
-//                        productLiveData.postValue(searchedResultResponse)
-//                    }
-//
-//                } else {
-//                    productLiveData.postValue(Resource.Error(application.getString(R.string.offline)))
-//
-//                }
-//            } catch (e: Exception) {
-//                productLiveData.postValue(Resource.Error(application.getString(R.string.something_wrong)))
-//
-//            }
-//        }
-//
-//        return productLiveData
-//    }
 
 
     private val _productsSavedState: MutableStateFlow<Resource<List<ProductsItem>>> =

@@ -26,6 +26,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.spyk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -112,14 +113,13 @@ internal class ProductsViewModelTest {
             )
         )
         coEvery{
-//            (productsViewModel.callSearchProduct("laptop"))
+            (productsViewModel.callSearchProduct("laptop"))
 
-            productRepository.getSearchProduct("laptop")
-        }returns Resource.Success(responseSuccess)
+        }
 //        productsViewModel.callSearchProduct("laptop")
         coVerify {
-//            productsViewModel.productsLiveData.value
-            productRepository.getSearchProduct("laptop")
+            productsViewModel.productsLiveData.value
+
         }
 
         assertEquals(Resource.Success(responseSuccess),productsViewModel.productsLiveData.value)
